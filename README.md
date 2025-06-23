@@ -6,6 +6,14 @@ This project automates the process of fetching, filtering, classifying, summariz
 
 ---
 
+## Workflow Graph Visualization
+
+Below is a visualization of the workflow graph structure. This diagram illustrates how the different agents (nodes) are connected and how the workflow progresses:
+
+![Workflow Graph](workflow_graph.png)
+
+---
+
 ## Features
 
 - **Automated RSS Fetching:** Collects articles from multiple AI-related news sources.

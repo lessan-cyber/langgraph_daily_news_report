@@ -18,34 +18,20 @@ if __name__ == "__main__":
     }
 
     app = create_daily_ai_news_workflow()
-
-    print("\n--- Exécution du workflow LangGraph ---")
+    graph_png = app.get_graph().draw_mermaid_png()
+    with open("workflow_graph.png", "wb") as f:
+        f.write(graph_png)
+    print("\n--- Workflow execution  ---")
     final_state = app.invoke(initial_state)
 
-    print("\n--- Workflow Terminé. État final du graphe : ---")
+    print("\n--- workflow execution end : ---")
+    print(f"total number of articles : {len(final_state['all_articles'])}")
     print(
-        f"Nombre total d'articles bruts récupérés : {len(final_state['all_articles'])}"
+        f"number of article after after applying the 'published yesterday' filter : {len(final_state['filtered_articles'])}"
     )
-    print(
-        f"Nombre d'articles filtrés (publiés hier) : {len(final_state['filtered_articles'])}"
-    )
-
-    print("\n--- Résumés générés par catégorie : ---")
-    if final_state["summaries"]:
-        for category, summary in final_state["summaries"].items():
-            print(f"\n### Catégorie: {category.upper()} ###")
-            print(summary)
-            print("-" * 50)
-    else:
-        print("Aucun résumé généré.")
-
-    if final_state["workflow_messages"]:
-        print("\n--- Messages du Workflow : ---")
-        for msg in final_state["workflow_messages"]:
-            print(f"- {msg}")
 
     if final_state.get("final_report_path"):
-        print(f"\n--- Rapport final généré : {final_state['final_report_path']} ---")
-        print("\nOuvrez ce fichier pour consulter le rapport complet.")
+        print(f"\n--- final report generated : {final_state['final_report_path']} ---")
+        print("\n open this file to see it .")
     else:
-        print("\n--- Aucun rapport final n'a été généré. ---")
+        print("\n--- No report has been generated. ---")
